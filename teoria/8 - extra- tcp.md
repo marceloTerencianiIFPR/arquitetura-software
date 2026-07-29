@@ -1,8 +1,6 @@
 # TCP e Sockets
 
-Para que duas aplicações consigam trocar informações através de uma rede, é necessário utilizar um protocolo de transporte. Na Internet, os dois protocolos mais utilizados são o **TCP (Transmission Control Protocol)** e o **UDP (User Datagram Protocol)**. A escolha entre eles depende das necessidades da aplicação. :contentReference[oaicite:0]{index=0}
-
-Nesta disciplina utilizaremos o **TCP**, pois ele fornece uma comunicação confiável e orientada à conexão.
+Para que duas aplicações consigam trocar informações através de uma rede, é necessário utilizar um protocolo de transporte. Na Internet, os dois protocolos mais utilizados são o **TCP (Transmission Control Protocol)** e o **UDP (User Datagram Protocol)**. A escolha entre eles depende das necessidades da aplicação.
 
 ---
 
@@ -10,7 +8,7 @@ Nesta disciplina utilizaremos o **TCP**, pois ele fornece uma comunicação conf
 
 O **Transmission Control Protocol (TCP)** é um protocolo da camada de transporte responsável por estabelecer uma comunicação confiável entre dois processos executando em computadores diferentes.
 
-Diferentemente do UDP, o TCP estabelece uma conexão antes da troca de dados e utiliza mecanismos para garantir que as mensagens sejam entregues corretamente. :contentReference[oaicite:1]{index=1}
+Diferentemente do UDP, o TCP estabelece uma conexão antes da troca de dados e utiliza mecanismos para garantir que as mensagens sejam entregues corretamente.
 
 As principais características do TCP são:
 
@@ -43,7 +41,7 @@ Cliente                    Servidor
    ACK  --------------------->
 ```
 
-Esse procedimento é conhecido como **Three-Way Handshake** (aperto de mão em três etapas). :contentReference[oaicite:2]{index=2}
+Esse procedimento é conhecido como **Three-Way Handshake** (aperto de mão em três etapas).
 
 Somente após essa etapa a troca de dados pode começar.
 
@@ -63,7 +61,7 @@ Mensagem ----------------------->
 
 Durante essa comunicação, o TCP acompanha quais dados já foram enviados e quais já foram recebidos.
 
-Caso algum segmento seja perdido durante a transmissão, ele poderá ser reenviado automaticamente. Além disso, o protocolo utiliza números de sequência e confirmações (ACK) para garantir que os dados sejam entregues corretamente e na ordem adequada. :contentReference[oaicite:3]{index=3}
+Caso algum segmento seja perdido durante a transmissão, ele poderá ser reenviado automaticamente. Além disso, o protocolo utiliza números de sequência e confirmações (ACK) para garantir que os dados sejam entregues corretamente e na ordem adequada.
 
 ---
 
@@ -85,7 +83,7 @@ FIN ------------------------->
 ACK ------------------------->
 ```
 
-Esse procedimento garante que ambos os lados saibam que a sessão foi finalizada corretamente. :contentReference[oaicite:4]{index=4}
+Esse procedimento garante que ambos os lados saibam que a sessão foi finalizada corretamente.
 
 ---
 
@@ -99,12 +97,12 @@ Um **socket** representa um ponto de comunicação entre duas aplicações.
 
 Quando um programa deseja enviar ou receber dados utilizando TCP, ele cria um socket e realiza todas as operações de comunicação por meio dele.
 
-Segundo o material da disciplina, uma conexão lógica é identificada por um socket composto por:
+Uma conexão lógica é identificada por um socket composto por:
 
 - endereço IP de origem;
 - porta de origem;
 - endereço IP de destino;
-- porta de destino. :contentReference[oaicite:5]{index=5}
+- porta de destino.
 
 Cada conexão TCP possui um socket único.
 
