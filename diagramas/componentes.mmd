@@ -1,0 +1,14 @@
+%% Este é o diagrama UML mais utilizado para arquitetura, pois mostra os componentes e suas interfaces.
+%% Pergunta respondida: Quais componentes compõem o sistema e como eles interagem?
+
+flowchart LR
+    UC["«actor»<br/>Usuário cliente"]
+    C["«component»<br/>Cliente Python"]
+    S["«component»<br/>Servidor Python"]
+    US["«actor»<br/>Operador servidor"]
+
+    UC --> C
+    C <-->|"TCP/IP<br/>porta 5000"| S
+    S --> US
+    US --> S
+    C --> UC

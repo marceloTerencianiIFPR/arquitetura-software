@@ -1,0 +1,23 @@
+sequenceDiagram
+    actor UC as Usuário cliente
+    participant C as Cliente
+    participant S as Servidor
+    actor US as Operador servidor
+
+    C->>S: Solicita conexão TCP
+    S-->>C: Aceita conexão
+
+    loop Conversa
+        UC->>C: Digita mensagem
+        C->>S: Envia mensagem
+        Note over C: Cliente aguarda bloqueado
+
+        S->>US: Exibe mensagem
+        US->>S: Digita resposta
+        S-->>C: Envia resposta
+
+        C->>UC: Exibe resposta
+    end
+
+    C->>S: Envia "sair"
+    C-xS: Encerra conexão

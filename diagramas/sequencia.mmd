@@ -1,0 +1,39 @@
+sequenceDiagram
+    actor UsuarioCliente as Usuário do cliente
+    participant Cliente as Aplicação cliente
+    participant Servidor as Aplicação servidor
+    actor UsuarioServidor as Operador do servidor
+
+    Note over Servidor: bind(HOST, PORT)
+    Note over Servidor: listen(1)
+
+    UsuarioCliente->>Cliente: Executa o cliente
+    Cliente->>Servidor: connect(HOST, PORT)
+    Servidor-->>Cliente: Conexão TCP aceita
+
+    loop Enquanto ninguém enviar "sair"
+        UsuarioCliente->>Cliente: Digita uma mensagem
+        Cliente->>Servidor: sendall(mensagem)
+
+        alt Mensagem é "sair"
+            Cliente->>Cliente: Encerra o socket
+            Cliente-->>Servidor: Conexão encerrada
+        else Mensagem normal
+            Servidor->>Servidor: recv(BUFFER_SIZE)
+            Servidor->>Servidor: decode(UTF-8)
+            Servidor->>UsuarioServidor: Exibe a mensagem recebida
+
+            UsuarioServidor->>Servidor: Digita uma resposta
+            Servidor->>Servidor: encode(UTF-8)
+            Servidor->>Cliente: sendall(resposta)
+
+            alt Resposta é "sair"
+                Servidor->>Servidor: Encerra o socket
+                Servidor-->>Cliente: Conexão encerrada
+            else Resposta normal
+                Cliente->>Cliente: recv(BUFFER_SIZE)
+                Cliente->>Cliente: decode(UTF-8)
+                Cliente->>UsuarioCliente: Exibe a resposta
+            end
+        end
+    end

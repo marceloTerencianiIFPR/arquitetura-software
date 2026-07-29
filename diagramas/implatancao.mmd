@@ -1,0 +1,32 @@
+%% Mostra onde o software executa.
+%% Pergunta respondida: Onde cada componente é executado?
+
+flowchart LR
+    subgraph NoCliente["«device» Máquina Cliente"]
+        direction TB
+
+        subgraph AmbienteCliente["«executionEnvironment» Python"]
+            Cliente["«artifact» cliente.py"]
+            SocketCliente["Socket TCP cliente"]
+        end
+
+        Cliente --> SocketCliente
+    end
+
+    subgraph Rede["«communicationPath» Rede TCP/IP"]
+        Conexao["IPv4<br/>porta 5000<br/>mensagens UTF-8"]
+    end
+
+    subgraph NoServidor["«device» Máquina Servidor"]
+        direction TB
+
+        subgraph AmbienteServidor["«executionEnvironment» Python"]
+            Servidor["«artifact» servidor.py"]
+            SocketServidor["Socket TCP servidor"]
+        end
+
+        Servidor --> SocketServidor
+    end
+
+    SocketCliente <-->|"conexão TCP"| Conexao
+    Conexao <-->|"comunicação síncrona"| SocketServidor
