@@ -22,6 +22,17 @@ services:
       produtos:
         condition: service_started
 
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    environment:
+      PRODUTOS_URL: http://produtos:3001
+      PEDIDOS_URL: http://pedidos:3002
+    depends_on:
+      - produtos
+      - pedidos
+
   postgres:
     image: postgres:16-alpine
     environment:
