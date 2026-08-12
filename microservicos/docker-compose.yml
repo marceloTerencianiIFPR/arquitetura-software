@@ -1,0 +1,14 @@
+services:
+  produtos:
+    build: ./produtos
+    ports:
+      - "3001:3001"
+
+  pedidos:
+    build: ./pedidos
+    ports:
+      - "3002:3002"
+    environment:
+      PRODUTOS_URL: http://produtos:3001
+    depends_on:
+      - produtos
