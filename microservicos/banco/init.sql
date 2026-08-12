@@ -1,0 +1,1 @@
+CREATE DATABASE pedidos_db;
