@@ -1,0 +1,34 @@
+flowchart TB
+
+    subgraph Sistema["Sistema de microserviços"]
+        direction TB
+
+        subgraph Gateway["📦 API Gateway"]
+            GatewayJS["server.js"]
+        end
+
+        subgraph Produtos["📦 Produtos"]
+            ProdutosJS["server.js"]
+            ProdutosDB["db.js"]
+        end
+
+        subgraph Pedidos["📦 Pedidos"]
+            PedidosJS["server.js"]
+            PedidosDB["db.js"]
+        end
+
+        subgraph Banco["📦 Banco"]
+            InitSQL["init.sql"]
+        end
+
+        Compose["docker-compose.yml"]
+    end
+
+    Gateway -->|"«HTTP»"| Produtos
+    Gateway -->|"«HTTP»"| Pedidos
+    Pedidos -->|"«HTTP»"| Produtos
+
+    Produtos -. "«acessa»" .-> Banco
+    Pedidos -. "«acessa»" .-> Banco
+
+    Compose -. "«implanta»" .-> Gateway

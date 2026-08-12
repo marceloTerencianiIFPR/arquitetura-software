@@ -1,0 +1,36 @@
+flowchart TB
+    cliente["«external»<br/>Cliente REST"]
+
+    gateway["«component»<br/>API Gateway<br/>porta 3000"]
+
+    produtos["«component»<br/>Serviço de Produtos<br/>porta 3001"]
+
+    pedidos["«component»<br/>Serviço de Pedidos<br/>porta 3002"]
+
+    postgres["«database»<br/>PostgreSQL"]
+
+    produtosDB[("produtos_db")]
+    pedidosDB[("pedidos_db")]
+
+    cliente -->|"HTTP / API REST"| gateway
+
+    gateway -->|"HTTP /produtos"| produtos
+    gateway -->|"HTTP /pedidos"| pedidos
+
+    pedidos -->|"GET /produtos/:id"| produtos
+
+    produtos -->|"SQL"| postgres
+    pedidos -->|"SQL"| postgres
+
+    postgres --> produtosDB
+    postgres --> pedidosDB
+
+    classDef externo fill:#f3f4f6,stroke:#6b7280,color:#111827
+    classDef inicial fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef persistencia fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef gatewayCor fill:#ffedd5,stroke:#ea580c,color:#431407
+
+    class cliente externo
+    class produtos,pedidos inicial
+    class postgres,produtosDB,pedidosDB persistencia
+    class gateway gatewayCor

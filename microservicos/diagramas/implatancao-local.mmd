@@ -1,0 +1,20 @@
+flowchart TB
+    subgraph computador["Computador local"]
+        cliente["Cliente REST"]
+
+        subgraph produtos["Node.js — Produtos :3001"]
+            apiProdutos["API Produtos"]
+            dadosProdutos[("Array de produtos")]
+        end
+
+        subgraph pedidos["Node.js — Pedidos :3002"]
+            apiPedidos["API Pedidos"]
+            dadosPedidos[("Array de pedidos")]
+        end
+    end
+
+    cliente -->|HTTP| apiProdutos
+    cliente -->|HTTP| apiPedidos
+    apiPedidos -->|HTTP| apiProdutos
+    apiProdutos --> dadosProdutos
+    apiPedidos --> dadosPedidos

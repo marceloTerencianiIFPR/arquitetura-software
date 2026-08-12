@@ -1,0 +1,23 @@
+flowchart TB
+    cliente["Cliente REST"]
+
+    subgraph docker["Docker Host"]
+        gateway["Container API Gateway<br/>Node.js :3000"]
+
+        subgraph servicos["Microserviços"]
+            produtos["Container Produtos<br/>Node.js :3001"]
+            pedidos["Container Pedidos<br/>Node.js :3002"]
+        end
+
+        subgraph postgres["Container PostgreSQL :5432"]
+            produtosDB[("produtos_db")]
+            pedidosDB[("pedidos_db")]
+        end
+    end
+
+    cliente -->|HTTP :3000| gateway
+    gateway -->|/produtos| produtos
+    gateway -->|/pedidos| pedidos
+    pedidos -->|HTTP interno| produtos
+    produtos -->|SQL| produtosDB
+    pedidos -->|SQL| pedidosDB

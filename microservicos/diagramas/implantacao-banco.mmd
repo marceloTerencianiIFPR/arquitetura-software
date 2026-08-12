@@ -1,0 +1,18 @@
+flowchart TB
+    cliente["Cliente REST"]
+
+    subgraph docker["Docker Host"]
+        produtos["Container Produtos<br/>Node.js :3001"]
+        pedidos["Container Pedidos<br/>Node.js :3002"]
+
+        subgraph postgres["Container PostgreSQL :5432"]
+            produtosDB[("produtos_db")]
+            pedidosDB[("pedidos_db")]
+        end
+    end
+
+    cliente -->|HTTP :3001| produtos
+    cliente -->|HTTP :3002| pedidos
+    pedidos -->|HTTP pela rede Docker| produtos
+    produtos -->|SQL| produtosDB
+    pedidos -->|SQL| pedidosDB

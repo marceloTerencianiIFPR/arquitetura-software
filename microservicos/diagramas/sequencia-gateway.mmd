@@ -1,0 +1,18 @@
+sequenceDiagram
+    actor Cliente
+    participant Gateway as API Gateway
+    participant Pedidos as Serviço Pedidos
+    participant Produtos as Serviço Produtos
+    participant ProdutosDB as produtos_db
+    participant PedidosDB as pedidos_db
+
+    Cliente->>Gateway: POST /pedidos
+    Gateway->>Pedidos: Encaminha POST /pedidos
+    Pedidos->>Produtos: GET /produtos/:id
+    Produtos->>ProdutosDB: SELECT produto
+    ProdutosDB-->>Produtos: Dados do produto
+    Produtos-->>Pedidos: Produto e preço
+    Pedidos->>PedidosDB: INSERT pedido
+    PedidosDB-->>Pedidos: Pedido cadastrado
+    Pedidos-->>Gateway: 201 Created
+    Gateway-->>Cliente: 201 Created

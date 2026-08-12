@@ -1,0 +1,25 @@
+flowchart TB
+    cliente["Cliente"]
+
+    subgraph hostGateway["Host 1"]
+        gateway["Container Gateway<br/>:3000"]
+    end
+
+    subgraph hostProdutos["Host 2"]
+        produtos["Container Produtos<br/>:3001"]
+    end
+
+    subgraph hostPedidos["Host 3"]
+        pedidos["Container Pedidos<br/>:3002"]
+    end
+
+    subgraph hostBanco["Host 4"]
+        postgres["Container PostgreSQL<br/>:5432"]
+    end
+
+    cliente -->|HTTP| gateway
+    gateway -->|HTTP| produtos
+    gateway -->|HTTP| pedidos
+    pedidos -->|HTTP| produtos
+    produtos -->|SQL| postgres
+    pedidos -->|SQL| postgres

@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor Cliente
+    participant Pedidos as Serviço Pedidos
+    participant Produtos as Serviço Produtos
+    participant ProdutosDB as produtos_db
+    participant PedidosDB as pedidos_db
+
+    Cliente->>Pedidos: POST /pedidos
+    Pedidos->>Produtos: GET /produtos/:id
+    Produtos->>ProdutosDB: SELECT produto
+    ProdutosDB-->>Produtos: Dados do produto
+    Produtos-->>Pedidos: Produto e preço
+    Pedidos->>PedidosDB: INSERT pedido
+    PedidosDB-->>Pedidos: Pedido cadastrado
+    Pedidos-->>Cliente: 201 Created
