@@ -3,6 +3,11 @@ services:
     build: ./produtos
     ports:
       - "3001:3001"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/produtos_db
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   pedidos:
     build: ./pedidos
@@ -12,3 +17,22 @@ services:
       PRODUTOS_URL: http://produtos:3001
     depends_on:
       - produtos
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: produtos_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d produtos_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
